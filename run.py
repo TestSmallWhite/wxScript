@@ -118,18 +118,30 @@ class Category(object):
             # 结束时间不能比开始时间小
             if self.comparing_date(start_date, end_date):
                 raise Exception("结束时间不能比开始时间小")
+
+            # 添加上00
+            start_date = "00" + start_date
+            end_date = "00" + end_date
         elif start_date and end_date == None:
-            end_date = "00" + str(datetime.datetime.now().date())
+            end_date = str(datetime.datetime.now().date())
 
             # 结束时间不能比开始时间小
             if self.comparing_date(start_date, end_date):
                 raise Exception("结束时间不能比开始时间小")
+
+            # 添加上00
+            start_date = "00" + start_date
+            end_date = "00" + end_date
         elif start_date == None and end_date:
-            start_date = "00" + str(datetime.datetime.now().date())
+            start_date = str(datetime.datetime.now().date())
 
             # 结束时间不能比开始时间小
             if self.comparing_date(start_date, end_date):
                 raise Exception("结束时间不能比开始时间小")
+
+            # 添加上00
+            start_date = "00" + start_date
+            end_date = "00" + end_date
         else:
             # 给时间控件输入日期
             # 判断今天是否为星期一，如果是星期一，start_date_element 就是上星期五，否则就是昨天
