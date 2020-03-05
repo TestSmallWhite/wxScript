@@ -6,7 +6,7 @@ import datetime
 import re
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-
+import config
 
 # 声明一个跳出循环类，遇到就跳出循环
 class BreakFor(Exception):
