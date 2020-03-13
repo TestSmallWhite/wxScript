@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import config
 
+
 # 声明一个跳出循环类，遇到就跳出循环
 class BreakFor(Exception):
     pass
@@ -206,12 +207,13 @@ class Category(object):
         self.feedback_pages = self.driver.find_elements_by_xpath('//*[@id="feedTable_paginate"]/span/a')[-1]
 
         for page in range(1, int(self.feedback_pages.text) + 1):
-            print("当前 %d 页开始分类" % (page))
+            print("第 %d 页开始分类" % (page))
 
             # 循环 100 次。最后一页可能不够100条，所以要try except 兼容
             # 循环要从1开始，到100结束
             try:
-                for feedback_num in range(1, 101):
+                # 当循环到101次，表示100次分完了，这时会报错indexerror，要记得处理
+                for feedback_num in range(1, 102):
                     feedback_content = self.driver.find_element_by_xpath(
                         '//*[@id="feedTable"]/tbody/tr[' + str(feedback_num) + ']/td[6]').text
                     self.edit_or_save = self.driver.find_element_by_xpath(
@@ -221,8 +223,14 @@ class Category(object):
                         self.match_query(feedback_num, feedback_content)
                     except BreakFor:
                         continue
+            except IndexError as e:
+                print("第 %d 页结束分类" % (page))
+
+                # 有可能会刚好最后一页是100条，所以要判断一下是否为最后一页，打印下“分类完毕”
+                if page == self.feedback_pages.text:
+                    print("分类完毕")
             except NoSuchElementException:
-                print("当前 %d 页结束分类" % (page))
+                print("第 %d 页结束分类" % (page))
                 # 表示分完了
                 print("分类完毕")
 
