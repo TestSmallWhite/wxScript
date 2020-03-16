@@ -5,10 +5,10 @@
 """
 
 # 分类网址
-FEEDBACK_URL = "http://9.134.55.214:8881/feedback"
+FEEDBACK_URL = ""
 
 # webdrvier 存放位置
-CHROME_PATH = r"E:\下载\chromedriver.exe"
+CHROME_PATH = r""
 
 # query list
 QUERY_LIST = [

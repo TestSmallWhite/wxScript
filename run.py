@@ -223,19 +223,13 @@ class Category(object):
                         self.match_query(feedback_num, feedback_content)
                     except BreakFor:
                         continue
-            except IndexError as e:
-                print("第 %d 页结束分类" % (page))
-
-                # 有可能会刚好最后一页是100条，所以要判断一下是否为最后一页，打印下“分类完毕”
-                if page == self.feedback_pages.text:
-                    print("分类完毕")
             except NoSuchElementException:
                 print("第 %d 页结束分类" % (page))
-                # 表示分完了
-                print("分类完毕")
 
             # 点击下一页
             self.driver.find_element_by_id("feedTable_next").click()
+
+        print("分类结束")
 
         print("共有 %s 条反馈，已分类 %d 条反馈，未分类 %d 条反馈" % (
             self.feedback_count, self.category_feedback_count, int(self.feedback_count) - self.category_feedback_count))
